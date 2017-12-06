@@ -1,6 +1,6 @@
-# Car-collowing models 
+# Car-collowing models
 
-Comparison of three car-following models with respect to their stability. 
+Comparison of three car-following models with respect to their stability.
 
 [![Scenario](scenario.png)]
 
@@ -9,7 +9,7 @@ Comparison of three car-following models with respect to their stability.
 $$
 \dot x_i(t)=\frac{d_i(t)}{T}=\frac{x_{i+1}(t)-x_i(t)-\ell}{T}\quad T > 0.
 $$
- 
+
 ## Optimal-Velocity-Modell (OVM) (Masako Bando et al. 1995)
 
 $$
@@ -26,13 +26,14 @@ $$
 $$
 with $T^r,T^r_2>0$ two relaxation constants.
 
-## Local and global stability 
+## Local and global stability
+
 
 
 |-----------------------------------------------------------------------------------------------------------
-|              | local                                                |   global                            | 
+|              | local                                                |   global                            |
 |-----------------------------------------------------------------------------------------------------------
-| Pipes        | $T > 0$                                              |  $T > 0$                            | 
+| Pipes        | $T > 0$                                              |  $T > 0$                            |
 |-----------------------------------------------------------------------------------------------------------
 | OVM          | $\ 0<\frac1T<\frac1{4T^r}                            | 0<\frac1T<\frac1{2T^r}$             |
 |-----------------------------------------------------------------------------------------------------------|
@@ -40,6 +41,6 @@ with $T^r,T^r_2>0$ two relaxation constants.
 |------------------------------------------------------------------------------------------------------------
 
 
-## Credits 
+## Credits
 
 Antoine Tordeux (tordeux@uni-wuppertal.de)
