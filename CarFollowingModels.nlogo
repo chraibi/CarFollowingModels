@@ -1,10 +1,10 @@
 ; Author: Antoine Tordeux, Mohcine Chraibi
 breed [cars car]
-globals [time LS GS]
+globals [time LS GS Collisions]
 cars-own [speed acc pred]
 
 to setup
-  clear-all
+  clear-all reset-ticks
   ;
   ask patches with [pycor = 0][set pcolor white]
   create-cars Nb-agents [set heading 90 set shape "car" set color red
@@ -13,15 +13,16 @@ to setup
   ask cars [ifelse xcor = max [xcor] of cars
     [set pred one-of cars with-min [xcor]]
     [set pred one-of cars with [xcor > [xcor] of myself] with-min [xcor]]]
-  set LS "yes"
-  set GS "yes"
+  set LS "Yes"
+  set GS "Yes"
+  set collisions "No"
 end
 
 to plot!
   set-current-plot "Trajectories"
   set-plot-y-range precision (time - 100) 0 precision time 0
   ask cars [plotxy xcor time]
-  if time mod 200 = 0 [clear-plot]
+  if time mod 250 = 0 [clear-plot]
 ; colors: http://ccl.northwestern.edu/netlogo/docs/programming.html#colors
   ask patches [
     ifelse LS = "No" or  GS = "No"
@@ -30,25 +31,28 @@ to plot!
     ]
 
     ; stability conditions
-   if model = "OVM" [
+   if model = "OVM"  [
       ifelse Tr < T / 4 [set LS "Yes"] [set LS "No"]
       ifelse Tr < T / 2 [set GS "Yes"] [set GS "No"]
     ]
-   if model = "FVDM" [
+   if model = "FVDM" and time mod 5 = 0 [
      let oT  1 / T
-     ifelse   oT < (1 + Tr / Tr2) ^ 2 / (4 * Tr) [set LS "Yes"] [set LS "No"]
+     ifelse   oT < (1 - Tr / Tr2) ^ 2 / (4 * Tr) [set LS "Yes"] [set LS "No"]
      ifelse oT < (1 / (2 * Tr) + 1 / Tr2) [set GS "Yes"] [set GS "No"]
    ]
 
 end
 
 to-report V [s]
-  report min(list V0 max(list 0 ((s - 1)/ T)))
+  report min(list V0 max(list 0 ((s - 1)/ T) ) )
 end
 
 to move
   plot! set time precision (time + dt) 5
+  tick-advance 1
+  if time mod 20 = 0 [set collisions "No"]
   ask cars [
+    if distance pred < 0.5  [set collisions  "Yes"]
     if model = "Pipes" [set speed V distance pred]
     if model = "OVM" [
       set speed speed + dt / Tr * (V distance pred - speed)
@@ -59,10 +63,14 @@ to move
     ]
 
     let max_v  max (list 0.1 max [speed] of cars)
+    let abs_speed abs speed
+    let rr (max_v - abs_speed) / max_v * 255 ; red
+    let gg abs_speed / max_v * 255 ; green
+    let bb abs_speed / max_v * 255 ; blue
+    let r  max(list 0 rr)
+    let g  max(list 0 gg)
+    let b  max(list 0 bb)
 
-    let r  (max_v - speed) / max_v * 255
-    let g  speed / max_v * 255
-    let b  speed / max_v * 255
     set color (list r g b)
     fd(speed * dt)
   ]
@@ -105,17 +113,17 @@ Nb-agents
 Nb-agents
 0
 50
-30
+37
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-107
-140
-162
-174
+106
+134
+161
+168
 NIL
 Setup
 NIL
@@ -129,10 +137,10 @@ NIL
 1
 
 BUTTON
-108
-179
-163
-212
+106
+173
+161
+206
 NIL
 Move
 T
@@ -191,7 +199,7 @@ Initial-position
 CHOOSER
 264
 134
-356
+456
 179
 Model
 Model
@@ -201,7 +209,7 @@ Model
 SLIDER
 360
 182
-452
+456
 215
 dt
 dt
@@ -222,7 +230,7 @@ T
 T
 .1
 2
-1.1
+1.2
 .1
 1
 NIL
@@ -236,8 +244,8 @@ SLIDER
 Tr
 Tr
 .1
-4
-1.1
+10
+10
 .1
 1
 NIL
@@ -246,13 +254,13 @@ HORIZONTAL
 SLIDER
 360
 219
-452
+457
 252
 Tr2
 Tr2
 .1
 5
-0.9
+1.3
 .1
 1
 NIL
@@ -276,6 +284,17 @@ MONITOR
 300
 Global stability
 GS
+17
+1
+11
+
+MONITOR
+377
+255
+457
+300
+Collisions?
+collisions
 17
 1
 11
