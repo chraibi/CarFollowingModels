@@ -63,7 +63,7 @@ to move
     ]
 
     let max_v  max (list 0.1 max [speed] of cars)
-    let abs_speed abs speed
+    let abs_speed speed
     let rr (max_v - abs_speed) / max_v * 255 ; red
     let gg abs_speed / max_v * 255 ; green
     let bb abs_speed / max_v * 255 ; blue
@@ -113,7 +113,7 @@ Nb-agents
 Nb-agents
 0
 50
-37
+40
 1
 1
 NIL
