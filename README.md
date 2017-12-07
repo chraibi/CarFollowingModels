@@ -2,6 +2,7 @@
 
 Comparison of three car-following models with respect to their stability.
 
+
 [![Scenario](figs/scenario.png)]
 
 ## Pipes (Louis A. Pipes 1953)
@@ -21,6 +22,7 @@ with a reaction time `T^r>0`.
 with `T^r, T^r_2>0` two relaxation constants.
 
 ## Local and global stability
+
 
 [![Scenario](figs/stability.png)]
 
