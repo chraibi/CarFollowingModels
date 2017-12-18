@@ -23,8 +23,12 @@ with `T^r, T^r_2>0` two relaxation constants.
 
 ## Local and global stability
 
-
 ![Scenario](figs/stability.png)
+
+
+## Usage
+
+Download [NetLogo](https://ccl.northwestern.edu/netlogo/download.shtml) and open the nlogo-file.
 
 ## Credits
 
