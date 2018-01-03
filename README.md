@@ -34,6 +34,8 @@ with `T^r, T^r_2>0` two relaxation constants.
 
 You can change the parameters while the simulation is running. However, when the number of agents is changes, you need to `Setup` again.
 
+![gif](cars.gif)
+
 ## Credits
 
 Antoine Tordeux (tordeux@uni-wuppertal.de)
