@@ -1,3 +1,7 @@
+
+[![DOI](https://zenodo.org/badge/113326939.svg)](https://zenodo.org/badge/latestdoi/113326939)
+
+
 # Car-collowing models
 
 Comparison of three car-following models with respect to their stability.
